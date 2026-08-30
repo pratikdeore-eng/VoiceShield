@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceGuard | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Segoe UI, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #07111f;
+            color: #eef6ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            padding: 25px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #168cff, #0066ff);
+            box-shadow: 0 0 30px rgba(22, 140, 255, .35);
+            font-size: 30px;
+        }
+
+        .logo h1 {
+            margin-top: 12px;
+            font-size: 27px;
+        }
+
+        .logo span {
+            color: #ffc928;
+        }
+
+        .subtitle {
+            color: #8ea4bb;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .login-card {
+            background: linear-gradient(145deg, #0d1d30, #091a2b);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.35);
+        }
+
+        .login-card h2 {
+            font-size: 21px;
+            margin-bottom: 7px;
+        }
+
+        .login-card > p {
+            color: #8ea4bb;
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            color: #8ea4bb;
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 9px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: #081827;
+            color: white;
+            outline: none;
+            font-size: 13px;
+        }
+
+        input:focus {
+            border-color: #168cff;
+            box-shadow: 0 0 10px rgba(22,140,255,.15);
+        }
+
+        .password-row {
+            position: relative;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 11px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #8ea4bb;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0 20px;
+            font-size: 11px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #8ea4bb;
+        }
+
+        .remember input {
+            width: auto;
+        }
+
+        .forgot {
+            color: #168cff;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(90deg, #168cff, #0066ff);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(22,140,255,.25);
+        }
+
+        .security {
+            margin-top: 20px;
+            padding: 11px;
+            border-radius: 9px;
+            background: rgba(36,227,155,.05);
+            border: 1px solid rgba(36,227,155,.12);
+            text-align: center;
+            color: #24e39b;
+            font-size: 10px;
+        }
+
+        .error {
+            display: none;
+            color: #ff5266;
+            font-size: 11px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        @media(max-width:500px) {
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        <div class="logo-icon">🛡️</div>
+        <h1>Voice<span>Guard</span></h1>
+        <div class="subtitle">
+            AI-Powered Voice Security Platform
+        </div>
+    </div>
+
+    <div class="login-card">
+
+        <h2>Welcome Back</h2>
+
+        <p>
+            Sign in to access your VoiceGuard security dashboard.
+        </p>
+
+        <div class="error" id="errorMessage">
+          
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+
+                <div class="password-row">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <span
+                        class="show-password"
+                        onclick="togglePassword()"
+                    >
+                        👁
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="options">
+
+                <label class="remember">
+                    <input type="checkbox" id="remember">
+                    Remember me
+                </label>
+
+                <span
+                    class="forgot"
+                    onclick="forgotPassword()"
+                >
+                    Forgot password?
+                </span>
+
+            </div>
+
+           <button
+                type="button"
+                class="login-btn"
+                onclick="loginUser()">
+                 Sign In
+            </button>
+
+        </form>
+
+        <div class="security">
+            🛡️ Secure VoiceGuard Authentication
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword() {
+
+    const password = document.getElementById("password");
+
+    if (password.type === "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
+
+}
+
+
+function forgotPassword() {
+
+    alert("Password recovery will be connected later.");
+
+}
+
+
+async function loginUser() {
+
+    console.log("LOGIN BUTTON CLICKED");
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const errorMessage = document.getElementById("errorMessage");
+
+    console.log("EMAIL:", email);
+    console.log("PASSWORD:", password);
+
+    if (email === "" || password === "") {
+
+        errorMessage.innerText = "Please enter email and password";
+        errorMessage.style.display = "block";
+
+        return;
+    }
+
+
+    try {
+
+        console.log("Sending request to backend...");
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/login",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+        console.log("STATUS:", response.status);
+        console.log("RESPONSE:", data);
+
+
+        if (!response.ok) {
+
+            errorMessage.innerText =
+                data.detail || "Invalid email or password";
+
+            errorMessage.style.display = "block";
+
+            return;
+        }
+
+
+        console.log("LOGIN SUCCESSFUL");
+
+        errorMessage.style.display = "none";
+
+
+        // Save user information
+        localStorage.setItem(
+            "voiceguardUser",
+            JSON.stringify(data.user)
+        );
+
+
+        // Go to dashboard
+        window.location.href = "index.html";
+
+    }
+
+    catch (error) {
+
+        console.error("LOGIN ERROR:", error);
+
+        errorMessage.innerText =
+            "Cannot connect to VoiceGuard server.";
+
+        errorMessage.style.display = "block";
+    }
+
+}
+
+</script>
+
+</body>
+</html>
